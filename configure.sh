@@ -42,3 +42,35 @@ EOF
 
 # Run V2Ray
 /usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
+
+cd /frpc
+
+cat <<-EOF > /frpc/frpc.ini
+
+[common]
+protocol = tcp
+server_addr = us-la-cn2.sakurafrp.com
+server_port = 7000
+
+user = 9o2ntwefismbyr83
+token = SakuraFrpClientToken
+sakura_mode = true
+use_recover = true
+
+tcp_mux = true
+pool_count = 1
+
+[herokuv2]
+type = tcp
+
+local_ip = 127.0.0.1
+local_port = $PORT
+
+use_encryption = 0
+use_compression = 0
+
+remote_port = 35907
+
+EOF
+
+/frpc/frpc -c /frpc/frpc.ini
