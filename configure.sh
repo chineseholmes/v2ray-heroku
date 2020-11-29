@@ -43,17 +43,18 @@ EOF
 # Run V2Ray
 /usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
 
-mkdir /tmp/frpc
-curl -L -H "Cache-Control: no-cache" -o /tmp/frpc/frp_${FRP_VERSION}_linux_amd64.tar.gz https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz
-tar -xf /tmp/frpc/frp_${FRP_VERSION}_linux_amd64.tar.gz 
-mkdir /frpc
-cp /tmp/frpc/frp_${FRP_VERSION}_linux_amd64/frpc* /frpc/ 
+# Download and install Frp
+mkdir /tmp/frp
+curl -L -H "Cache-Control: no-cache" -o /tmp/frp/frp.tar.gz https://github.com/fatedier/frp/releases/download/v0.34.3/frp_0.34.3_linux_amd64.tar.gz
+tar -xzvf /tmp/frp/frp.tar.gz -C /tmp/frp
+install -m 755 /tmp/frp/frp_0.34.3_linux_amd64/frpc /usr/local/bin/frpc
 
-rm -rf /tmp/frpc
+# Remove temporary directory
+rm -rf /tmp/frp
 
-cd /frpc
-
-cat <<-EOF > /frpc/frpc.ini
+# Frp new configuration
+install -d /usr/local/etc/frp
+cat << EOF > /usr/local/etc/frp/frpc.ini
 
 [common]
 protocol = tcp
@@ -81,4 +82,5 @@ remote_port = 35907
 
 EOF
 
-/frpc/frpc -c /frpc/frpc.ini
+# Run Frp
+/usr/local/bin/frpc -c /usr/local/etc/frp/frpc.ini
