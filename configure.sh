@@ -45,10 +45,9 @@ EOF
 
 mkdir /tmp/frpc
 curl -L -H "Cache-Control: no-cache" -o /tmp/frpc/frp_${FRP_VERSION}_linux_amd64.tar.gz https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz
-tar -xf frp_${FRP_VERSION}_linux_amd64.tar.gz 
+tar -xf /tmp/frpc/frp_${FRP_VERSION}_linux_amd64.tar.gz 
 mkdir /frpc
-cp frp_${FRP_VERSION}_linux_amd64/frpc* /frpc/ 
-rm -rf frp_${FRP_VERSION}_linux_amd64*
+cp /tmp/frpc/frp_${FRP_VERSION}_linux_amd64/frpc* /frpc/ 
 
 rm -rf /tmp/frpc
 
